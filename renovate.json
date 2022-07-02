@@ -1,6 +1,6 @@
 {
   "extends": ["config:base", "group:all", "docker:enableMajor"],
-  "schedule": ["before 11am"],
+  "schedule": ["before 3am on Monday"],
   "major": {
     "enabled": false
   },
@@ -10,10 +10,8 @@
   "patch": {
     "automerge": true
   },
-  "pin": {
-    "automerge": true
-  },
-  "digest": {
+  "lockFileMaintenance": {
+    "enabled": true,
     "automerge": true
   }
 }
