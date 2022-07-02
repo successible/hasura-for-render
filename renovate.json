@@ -1,17 +1,39 @@
 {
-  "extends": ["config:base", "group:all", "docker:enableMajor"],
-  "schedule": ["before 3am on Monday"],
-  "major": {
-    "enabled": false
-  },
-  "minor": {
-    "automerge": true
-  },
-  "patch": {
-    "automerge": true
-  },
+  "extends": [
+    "config:base",
+    "docker:enableMajor"
+  ],
+  "timezone": "America/Chicago",
+  "labels": ["dependency"],
+  "configMigration": true,
+  "packageRules": [
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["minor", "patch"],
+      "groupSlug": "all-minor-patch",
+      "groupName": "all non-major dependencies",
+      "schedule": ["before 6am on Tuesday"],
+      "automerge": true
+    },
+    {
+      "matchPackagePatterns": ["*"],
+      "matchUpdateTypes": ["major"],
+      "groupSlug": "all-major",
+      "groupName": "all major dependencies",
+      "schedule": ["before 6am on Monday"],
+      "automerge": false
+    }
+  ],
   "lockFileMaintenance": {
     "enabled": true,
-    "automerge": true
-  }
+    "automerge": true,
+    "schedule": ["before 6am on Wednesday"]
+  },
+  "regexManagers": [
+    {
+      "fileMatch": ["^(\\.github\\/workflows)\\/[^/]+\\.ya?ml$"],
+      "matchStrings": ["image: (?<depName>.*):(?<currentValue>.*)"],
+      "datasourceTemplate": "docker"
+    }
+  ]
 }
