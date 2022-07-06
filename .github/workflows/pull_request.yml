@@ -1,0 +1,13 @@
+name: pull_request
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  CI:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Echo "OK"
+        run: echo "OK"
